@@ -11,7 +11,18 @@
         loop:
 	 - ca-certificates
 	 - curl
-     - name: add GPG key
+     - name: Add GPG key
         apt_key:
          url: https://download.docker.com/linux/ubuntu/gpg
          state: present
+      - name: Install Docker
+         apt:
+          name: "{{item}}"
+          state: present
+         loop:
+          - docker-ce
+          - docker-ce-cli 
+          - containerd.io 
+          - docker-buildx-plugin 
+          - docker-compose-plugin
+
