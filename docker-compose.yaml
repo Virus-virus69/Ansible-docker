@@ -1,39 +1,7 @@
-version: "3.7"
-
 services:
-  app:
-    image: node:20-alpine
-    command: sh -c "yarn install && yarn run dev"
-    container_name: app
+  web:
+    build: .
     ports:
-      - '3000:3000'
-    working_dir: /app
-    volumes:
-      - ./:/app
-    restart: always
-    environment:
-      - 'MYSQL_HOST=mysql'
-      - 'MYSQL_USER=root'
-      - 'MYSQL_PASSWORD=slava123'
-      - 'MYSQL_DB=slava'
-    networks:
-      - app-net
-  mysql:
-    image: mysql:5.7
-    container_name: mysql
-    volumes:
-      - mysql-data:/var/lib/mysql
-    environment:
-      - 'MYSQL_ROOT_PASSWORD=slava123'
-      - 'MYSQL_DATABASE=slava'
-    networks:
-      - mysql-net
-volumes:
-  mysql-data:
-networks:
-  app-net:
-    name: app-net
-    driver: bridge
-  mysql-net:
-    name: mysql-net
-    driver: bridge
+      - "8000:5000"
+  redis:
+    image: "redis:alpine"
