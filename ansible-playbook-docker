@@ -1,0 +1,17 @@
+---
+ - name: Install docker-app
+   hosts: staging_app
+   become: yes
+
+   tasks:
+     - name: Install dependencies
+        apt: 
+  	 name: "{{item}}"
+	 state: present
+        loop:
+	 - ca-certificates
+	 - curl
+     - name: add GPG key
+        apt_key:
+         url: https://download.docker.com/linux/ubuntu/gpg
+         state: present
