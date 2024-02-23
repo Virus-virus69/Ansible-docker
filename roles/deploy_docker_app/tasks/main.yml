@@ -1,0 +1,66 @@
+---
+# tasks file for deploy_docker_app
+- name: Install dependencies
+  apt:
+   name: "{{item}}"
+   state: present
+  loop:
+   - ca-certificates
+   - curl
+- name: Add GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+- name: Install Docker
+  apt:
+   name: "{{item}}"
+   state: present
+  loop:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-buildx-plugin
+    - docker-compose-plugin
+- name: Check if docker service is running
+  service:
+    name: docker
+    state: started
+    enabled: yes
+  register: docker_service
+- name: Print the status of docker service
+  debug:
+    var: docker_service.status
+- name: Add svc_ansible user to docker group
+  user:
+    name: svc_ansible
+    groups: docker
+    append: yes
+
+- name: Create directory
+  file:
+    path: "{{dest_folder}}"
+    mode: 0755
+    owner: svc_ansible
+    group: svc_ansible
+    state: directory
+
+- name: Copy files to server
+  copy: 
+   src: "{{ item }}" 
+   dest: "{{dest_folder}}" 
+   mode: 0755
+  loop:
+    - "Dockerfile"
+    - "docker-compose.yaml"
+    - "app.py"
+    - "requirements.txt"
+- name: Start Docker Compose application
+  shell: docker compose -f /home/svc_ansible/docker_app/docker-compose.yaml up -d
+- name: Check if container is running
+  shell: docker ps | grep docker_app*
+  register: output
+  ignore_errors: true
+- name: Print the status of docker container
+  debug:
+    var: output
+

@@ -1,0 +1,3 @@
+---
+# vars file for deploy_docker_app
+dest_folder: /home/svc_ansible/docker_app
