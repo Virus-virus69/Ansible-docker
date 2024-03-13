@@ -133,8 +133,8 @@ def hello():
 ![image](https://github.com/Virus-virus69/Ansible-docker/assets/145215499/187fb9a0-3979-41f8-a17d-70e9ec0cf99f)  
 6. Следующие два шага были посвящены запуску приложения с помощью команды docker compose up -d и проверке успешного запуска контейнеров с помощью команды ```docker ps | grep docker_app*```:  
 ![image](https://github.com/Virus-virus69/Ansible-docker/assets/145215499/3656c889-9d36-4bdc-a42b-a5cac80cc12f)
-7. В конечном итоге будет получено подтверждение о том, что все tasks были успешно выполнены:
-![image](https://github.com/Virus-virus69/Ansible-docker/assets/145215499/b53edd09-52bd-4441-beda-8448a10b6d80)
+7. Для запуска playbook использовалась команда ```ansible-playbook --ask-vault-pass --extra-vars '@passwd.yml' ansible-playbook-docker```. В конечном итоге будет получено подтверждение о том, что все tasks были успешно выполнены:
+![image](https://github.com/Virus-virus69/Ansible-docker/assets/145215499/b53edd09-52bd-4441-beda-8448a10b6d80)  
 
 ## Заключение
 В этом проекте мы продемонстрировали, как использовать инструменты Ansible, Docker и Docker Compose для создания и развертывания простого приложения на удаленном компьютере. Мы использовали Docker для создания контейнера приложения, Docker Compose для управления контейнерами и Ansible для автоматизации развертывания и настройки. Этот проект может быть использован как отправная точка для более сложных проектов, где требуется развертывание и настройка приложений на удаленных компьютерах.
